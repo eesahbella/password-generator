@@ -90,8 +90,14 @@ var upperCasedCharacters = [
 
 // Function to prompt user for password options
 function getPasswordOptions() {
+  let passwordOptions = (prompt("What length would you like your password to be? Choose between 8-128 characters"));
 
+  while (passwordOptions < 8 || passwordOptions > 128) {
+    passwordOptions = (prompt("Invalid input. Please enter a length between 8 and 128 characters."));
+  }
 }
+
+getPasswordOptions();
 
 // Function for getting a random element from an array
 function getRandom(arr) {
@@ -100,7 +106,12 @@ function getRandom(arr) {
 
 // Function to generate password with user input
 function generatePassword() {
+  console.log("hey you clicked this button!");
 
+
+
+
+  return "generated password here : )";
 }
 
 // Get references to the #generate element
