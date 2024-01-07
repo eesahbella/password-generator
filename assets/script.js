@@ -88,42 +88,88 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-// Function to prompt user for password options
-function getPasswordOptions() {
-  let passwordOptions = (prompt("What length would you like your password to be? Choose between 8-128 characters"));
+var choiceArr = [];
+var characterLength = 8;
 
-  while (passwordOptions < 8 || passwordOptions > 128) {
-    passwordOptions = (prompt("Invalid input. Please enter a length between 8 and 128 characters."));
-  }
-}
 
-getPasswordOptions();
 
 // Function for getting a random element from an array
 function getRandom(arr) {
 
 }
 
+
+// Write password to the #password input
+function writePassword() {
+
+  var correctPrompts = getPasswordOptions();
+  var passwordText = document.querySelector('#password');
+
+  if (correctPrompts) {
+  var newPassword = generatePassword();
+  passwordText.value = newPassword;
+
+} else {
+  passwordText.value = "";
+}
+}
+
+
+
+
+
+
 // Function to generate password with user input
 function generatePassword() {
-  console.log("hey you clicked this button!");
 
-
-
-
-  return "generated password here : )";
+  var password = "";
+  for (let i = 0; i < characterLength; i++) {
+    var randomIndex = Math.floor(Math.random() * choiceArr.length);
+    password = password + choiceArr[randomIndex];
+  }
+  return password;
 }
+
+
+
+// Function to prompt user for password options
+function getPasswordOptions() {
+
+  choiceArr = [];
+
+  characterLength = parseInt(prompt("What length would you like your password to be? Choose between 8-128 characters"));
+
+  if ( isNaN(characterLength) || characterLength < 8 || characterLength > 128) {
+    characterLength = (alert("Invalid input. Please enter a length between 8 and 128 characters."));
+    return false;
+    }
+
+  if (confirm("Would you like lowercase letters in your password?")) {
+    choiceArr = choiceArr.concat(lowerCasedCharacters);
+  }
+
+  if (confirm("Would you like uppercase letters in your password?")) {
+      choiceArr = choiceArr.concat(upperCasedCharacters);
+  }
+
+  if (confirm("Would you like special characters in your password?")) {
+    choiceArr = choiceArr.concat(specialCharacters);
+}
+if (confirm("Would you like numbers in your password?")) {
+  choiceArr = choiceArr.concat(numericCharacters);
+}
+return true;
+
+}
+
+
+
+
 
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
 
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector('#password');
 
-  passwordText.value = password;
-}
 
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword);
